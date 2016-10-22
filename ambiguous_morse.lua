@@ -33,25 +33,6 @@ local parse = function(signal, spacing)
 	return output
 end
 
-local test = "..__.___.._._.._...._.___"
-local test_space = {}
-table.insert(test_space, 3)
-table.insert(test_space, 5)
-table.insert(test_space, 2)
-table.insert(test_space, 1)
-table.insert(test_space, 4)
-table.insert(test_space, 4)
-table.insert(test_space, 3)
-table.insert(test_space, 3)
-
-local test_out = parse(test, test_space)
-print("test_begin")
-for i,v in ipairs(test_out) do
-	print(i,v)
-end
---print(table.concat(test_out))
-print("test_end")
-
 local int_morse = {}
 
 int_morse["._"] = "a"
