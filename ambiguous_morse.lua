@@ -1,38 +1,5 @@
 #!/usr/bin/lua
 
-local copy = function(tab)
-	local new_tab = {}
-
-	for _,v in ipairs(tab) do
-		table.insert(new_tab, v)
-	end
-
-	return new_tab
-end
-
-local greedy_take = function(stack, length, max_take)
-	local s = stack or {}
-
-	while length > max_take do
-		table.insert(s, max_take)
-		length = length - max_take
-	end
-	table.insert(s, length)
-
-	return s
-end
-
-local parse = function(signal, spacing)
-	local output = {}
-	local cursor = 1
-	for _,v in ipairs(spacing) do
-		table.insert(output, string.sub(signal, cursor, cursor + v - 1))
-		cursor = cursor + v
-	end
-
-	return output
-end
-
 local int_morse = {}
 
 int_morse["._"] = "a"
@@ -89,6 +56,53 @@ int_morse["..__._"] = "_"
 int_morse["._.._."] = "\""
 int_morse["..._.._"] = "$"
 int_morse[".__._."] = "@"
+
+local copy = function(tab)
+	local new_tab = {}
+
+	for _,v in ipairs(tab) do
+		table.insert(new_tab, v)
+	end
+
+	return new_tab
+end
+
+local greedy_take = function(stack, length, max_take)
+	local s = stack or {}
+
+	while length > max_take do
+		table.insert(s, max_take)
+		length = length - max_take
+	end
+	table.insert(s, length)
+
+	return s
+end
+
+local parse = function(signal, spacing)
+	local output = {}
+	local cursor = 1
+	for _,v in ipairs(spacing) do
+		table.insert(output, string.sub(signal, cursor, cursor + v - 1))
+		cursor = cursor + v
+	end
+
+	return output
+end
+
+local translate = function(signal, morse)
+	local translation = {}
+
+	for _,v in ipairs(signal) do
+		if morse[v] then
+			table.insert(translation, morse[v])
+		else
+			return {}	-- error
+		end
+	end
+
+	return translation
+end
 
 local signal = arg[1]
 local segment_max = tonumber(arg[2])
